@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="js/city.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+		
+<body onload="init()">
+<form action="<#ZC_BLOG_HOST#>" method="post" name="creator" enctype="multipart/form-data">
+<script language="javascript">
+function comefrom(cityData) {
+	this.province = cityData[0].province;
+	this.city = cityData[0].city;
+	return cityData;
+}
+var where = new comefrom(window.CityArea);
+function select() {
+	with(document.creator.province) {
+		var province2 = options[selectedIndex].value;
+	}
+	//寻找匹配的省级而后将城市值添加到select
+	for (i = 0; i < where.length; i++) {
+		if (where[i].province == province2) {
+			province3 = (where[i].city).split("|");
+			for (j = 0; j < province3.length; j++) {
+				with(document.creator.city) {
+					length = province3.length;
+					options[j].text = province3[j];
+					options[j].value = province3[j];
+					var province4 = options[selectedIndex].value;
+				}
+			}
+			break;
+		}
+	}
+	document.creator.newprovincetion.value = province2 + province4;
+}
+
+function init() {
+	with(document.creator.province) {
+		length = where.length;
+		for (k = 0; k < where.length; k++) {
+			options[k].text = where[k].province;
+			options[k].value = where[k].province;
+		}
+		options[selectedIndex].text = where[0].province;
+		options[selectedIndex].value = where[0].province;
+	}
+	with(document.creator.city) {
+		province3 = (where[0].city).split("|");
+		length = province3.length;
+		for (l = 0; l < length; l++) {
+			options[l].text = province3[l];
+			options[l].value = province3[l];
+		}
+		options[selectedIndex].text = province3[0];
+		options[selectedIndex].value = province3[0];
+	}
+}</script>
+省份 <select name="province" onChange = "select()"></select>　
+城市 <select name="city" onChange = "select()"></select>
+<input type="hidden" name="newprovincetion" />
+</form>
+</body>
+</html>
